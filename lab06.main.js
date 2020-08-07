@@ -173,7 +173,7 @@ healthcheck(callback) {
     this.emit(status, { id: this.id });
   }
 
-   /**
+  /**
    * @memberof ServiceNowAdapter
    * @method getRecord
    * @summary Get ServiceNow Record
@@ -189,19 +189,19 @@ healthcheck(callback) {
      * Note how the object was instantiated in the constructor().
      * get() takes a callback function.
      */
-     this.connector.get((data, error) => {
+      this.connector.get((data, error) => {
         if (error) {
           return callback(error);
         } else{
             console.log(`\nResponse returned from GET request:\n${JSON.stringify(data)}`)
             if (data.hasOwnProperty('body')) {
-              let length_body = JSON.parse(data.body).result.length;
-              var data_body = JSON.parse(data.body).result;
+              let body_length = JSON.parse(data.body).result.length;
+              var body_data = JSON.parse(data.body).result;
               var final_json = [];
-              for(let i = 0; i < length_body; i++) {
-                final_json.push({"change_ticket_number" : data_body[i].number, "active" : data_body[i].active, "priority" : data_body[i].priority,
-                                   "description" : data_body[i].description, "work_start" : data_body[i].work_start, "work_end" : data_body[i].work_end,
-                                   "change_ticket_key" : data_body[i].sys_id});
+              for(let i = 0; i < body_length; i++) {
+                final_json.push({"change_ticket_number" : body_data[i].number, "active" : body_data[i].active, "priority" : body_data[i].priority,
+                                   "description" : body_data[i].description, "work_start" : body_data[i].work_start, "work_end" : body_data[i].work_end,
+                                   "change_ticket_key" : body_data[i].sys_id});
               }
               callback(final_json, error); 
             }  
@@ -225,22 +225,22 @@ healthcheck(callback) {
      * Note how the object was instantiated in the constructor().
      * post() takes a callback function.
      */
-
-    this.post((data, error) => {
+        this.post((data, error) => {
         if (error) {
             return callback(error);
         }else{
             if (data.hasOwnProperty('body')) {
                 var final_json = {};
-                var data_body = JSON.parse(data.body).result;
-                final_json = ({"change_ticket_number" : data_body.number, "active" : data_body.active, "priority" : data_body.priority,
-                                   "description" : data_body.description, "work_start" : data_body.work_start, "work_end" : data_body.work_end,
-                                   "change_ticket_key" : data_body.sys_id});
+                var body_data = JSON.parse(data.body).result;
+                final_json = ({"change_ticket_number" : body_data.number, "active" : body_data.active, "priority" : body_data.priority,
+                                   "description" : body_data.description, "work_start" : body_data.work_start, "work_end" : body_data.work_end,
+                                   "change_ticket_key" : body_data.sys_id});
                 callback(final_json, error); 
             } 
         }
-    
+        
     });    
+  
   }
 }
 
